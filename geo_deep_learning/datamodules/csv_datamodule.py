@@ -21,6 +21,7 @@ class CSVDataModule(LightningDataModule):
         std: list[float] | None = None,
         csv_root_folder: str = "",
         patches_root_folder: str = "",
+        enhanced_prob: float | None = None,
     ) -> None:
         """Initialize CSVDataModule."""
         super().__init__()
@@ -30,6 +31,7 @@ class CSVDataModule(LightningDataModule):
         self.data_type_max = data_type_max
         self.csv_root_folder = csv_root_folder
         self.patches_root_folder = patches_root_folder
+        self.enhanced_prob = enhanced_prob
         self.norm_stats = {
             "mean": mean or [0.0, 0.0, 0.0],
             "std": std or [1.0, 1.0, 1.0],
@@ -42,12 +44,14 @@ class CSVDataModule(LightningDataModule):
             norm_stats=self.norm_stats,
             csv_root_folder=self.csv_root_folder,
             patches_root_folder=self.patches_root_folder,
+            enhanced_prob=self.enhanced_prob,
         )
         self.val_dataset = CSVDataset(
             split="val",
             norm_stats=self.norm_stats,
             csv_root_folder=self.csv_root_folder,
             patches_root_folder=self.patches_root_folder,
+            enhanced_prob=self.enhanced_prob,
         )
         self.test_dataset = CSVDataset(
             split="tst",
